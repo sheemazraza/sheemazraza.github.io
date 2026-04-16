@@ -885,7 +885,7 @@ function renderBlog(records) {
     const tags = f.Tags ? f.Tags.split(',').map(t => t.trim()) : [];
     const tagHtml = tags.map(t => `<span class="blog-tag">${t}</span>`).join('');
     grid.innerHTML += `
-      <div class="blog-card" onclick="openPost('${r.id}', ${JSON.stringify(f).replace(/'/g,"&#39;")})">
+      <div class="blog-card" data-id="${r.id}" data-fields="${encodeURIComponent(JSON.stringify(f))}">
         <div class="blog-img"><div class="blog-img-text">${f.Name || ''}</div></div>
         <div class="blog-body">
           <div class="blog-tags">${tagHtml}</div>
@@ -912,6 +912,15 @@ function renderEmptyBlog(isSetup) {
 /* ══════════════════════════════════════
    POST MODAL
    ══════════════════════════════════════ */
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('.blog-card');
+  if (card) {
+    const id = card.dataset.id;
+    const fields = JSON.parse(decodeURIComponent(card.dataset.fields));
+    openPost(id, fields);
+  }
+});
+
 function openPost(id, fields) {
   const tags = fields.Tags ? fields.Tags.split(',').map(t => t.trim()) : [];
   document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
