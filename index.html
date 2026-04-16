@@ -915,7 +915,7 @@ function renderEmptyBlog(isSetup) {
 function openPost(id, fields) {
   const tags = fields.Tags ? fields.Tags.split(',').map(t => t.trim()) : [];
   document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
-  document.getElementById('modalTitle').textContent = fields.Title || '';
+  document.getElementById('modalTitle').textContent = fields.Name || '';
   document.getElementById('modalDate').textContent = fields.Date || '';
   document.getElementById('modalBody').textContent = fields.Body || '';
   document.getElementById('postModal').classList.add('open');
@@ -984,7 +984,7 @@ async function publishPost() {
   msg.style.display = 'none';
 
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  const fields = { Title: title, Tags: tags, Summary: summary, Body: body, Date: today };
+  const fields = { Name: title, Tags: tags, Summary: summary, Body: body, Date: today };
 
   try {
     const result = await createPost(fields);
@@ -1015,7 +1015,7 @@ async function loadAdminPosts() {
     if (!data.records || !data.records.length) { list.innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">No posts yet.</p>'; return; }
     list.innerHTML = data.records.map(r => `
       <div class="admin-post-row">
-        <div class="admin-post-title">${r.fields.Title || '(Untitled)'}</div>
+        <div class="admin-post-title">${r.fields.Name || '(Untitled)'}</div>
         <div class="admin-post-date">${r.fields.Date || ''}</div>
         <button class="admin-delete" onclick="removePost('${r.id}')">Delete</button>
       </div>`).join('');
