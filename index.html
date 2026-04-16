@@ -845,7 +845,7 @@ const AT_HEADERS = {
 };
 
 async function fetchPosts() {
-  if (CONFIG.AIRTABLE_TOKEN === 'patEookhhAbpmGMAy.9975a8458edcffd616c501e58e80c5f7063d1c9f204e26d4c9c8827c10db5872') {
+  if (CONFIG.AIRTABLE_TOKEN === 'PLACEHOLDER.9975a8458edcffd616c501e58e80c5f7063d1c9f204e26d4c9c8827c10db5872') {
     renderEmptyBlog(true);
     return;
   }
@@ -1004,7 +1004,7 @@ async function publishPost() {
 }
 
 async function loadAdminPosts() {
-  if (CONFIG.AIRTABLE_TOKEN === 'patEookhhAbpmGMAy.9975a8458edcffd616c501e58e80c5f7063d1c9f204e26d4c9c8827c10db5872') {
+  if (CONFIG.AIRTABLE_TOKEN === 'PLACEHOLDER.9975a8458edcffd616c501e58e80c5f7063d1c9f204e26d4c9c8827c10db5872') {
     document.getElementById('adminPostsList').innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">Connect Airtable to manage posts.</p>';
     return;
   }
