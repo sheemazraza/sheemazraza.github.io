@@ -886,10 +886,10 @@ function renderBlog(records) {
     const tagHtml = tags.map(t => `<span class="blog-tag">${t}</span>`).join('');
     grid.innerHTML += `
       <div class="blog-card" onclick="openPost('${r.id}', ${JSON.stringify(f).replace(/'/g,"&#39;")})">
-        <div class="blog-img"><div class="blog-img-text">${f.Title || ''}</div></div>
+        <div class="blog-img"><div class="blog-img-text">${f.Name || ''}</div></div>
         <div class="blog-body">
           <div class="blog-tags">${tagHtml}</div>
-          <h3>${f.Title || ''}</h3>
+          <h3>${f.Name || ''}</h3>
           <p>${f.Summary || (f.Body || '').slice(0, 120) + '...'}</p>
           <div class="blog-meta">
             <span>${f.Date || ''}</span>
