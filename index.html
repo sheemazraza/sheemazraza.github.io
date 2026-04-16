@@ -923,7 +923,7 @@ function openPost(id, fields) {
 }
 
 function closeModal(e) {
-  if (e.target.id === 'postModal') {
+  if (e.target.id === 'postModal' || e.target.classList.contains('modal-overlay')) {
     document.getElementById('postModal').classList.remove('open');
     document.body.style.overflow = '';
   }
