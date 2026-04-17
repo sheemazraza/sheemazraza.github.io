@@ -10,7 +10,7 @@
 :root {
   --navy: #0b1f3a;
   --navy-2: #132d52;
-  --navy-3: #1e3f6e
+  --navy-3: #1e3f6e;
   --gold: #c9a84c;
   --gold-light: #e0c07e;
   --gold-pale: #f5edd8;
@@ -33,7 +33,7 @@ nav {
   border-bottom: 1px solid rgba(201,168,76,0.18);
 }
 .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold-light); letter-spacing: 0.04em; }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; } a.nav-brand { text-decoration: none; }
 .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--gold-light); }
 
@@ -362,7 +362,7 @@ footer span { color: rgba(201,168,76,0.4); }
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav>
-  <div class="nav-brand">Sheemaz Raza</div>
+  <a href="#" class="nav-brand">Sheemaz Raza</a>
   <ul class="nav-links">
     <li><a href="#impact">Impact</a></li>
     <li><a href="#cases">Case Studies</a></li>
