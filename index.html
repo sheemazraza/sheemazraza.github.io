@@ -21,7 +21,7 @@
   --border: #e2ddd6;
   --success: #0f6e56;
 }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 17px; }
 body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); line-height: 1.65; overflow-x: hidden; }
 
 /* ── NAV ── */
@@ -32,9 +32,9 @@ nav {
   padding: 0 6%; height: 96px;
   border-bottom: 1px solid rgba(201,168,76,0.18);
 }
-.nav-brand { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); letter-spacing: 0.04em; font-weight: 700; }
+.nav-brand { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: var(--gold-light); letter-spacing: 0.04em; font-weight: 700; }
 .nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+.nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--gold-light); }
 
 /* ── HERO ── */
@@ -136,7 +136,7 @@ nav {
 .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.4rem); color: var(--white); line-height: 1.0; margin-bottom: 0.5rem; font-weight: 700; }
 .hero-name span { color: var(--gold); display: block; }
 .hero-subtitle { display: none; }
-.hero-summary { color: rgba(255,255,255,0.68); font-size: 0.94rem; line-height: 1.85; max-width: 480px; margin-bottom: 2.2rem; }
+.hero-summary { color: rgba(255,255,255,0.68); font-size: 1.05rem; line-height: 1.85; max-width: 480px; margin-bottom: 2.2rem; }
 .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
 .pill { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); color: var(--gold-light); font-size: 0.72rem; padding: 5px 14px; border-radius: 2px; letter-spacing: 0.07em; font-weight: 500; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -175,7 +175,7 @@ nav {
 .ic-icon { width: 40px; height: 40px; background: var(--navy); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; border-radius: 2px; }
 .ic-icon svg { width: 18px; height: 18px; fill: var(--gold); }
 .impact-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.5rem; font-weight: 700; }
-.impact-card p { font-size: 0.94rem; color: var(--muted); line-height: 1.75; }
+.impact-card p { font-size: 1.02rem; color: var(--muted); line-height: 1.75; }
 .impact-result { display: inline-flex; align-items: center; gap: 5px; background: var(--gold-pale); color: #6b4c0a; font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 2px; margin-top: 0.9rem; letter-spacing: 0.05em; }
 
 /* ── CASE STUDIES ── */
@@ -189,7 +189,7 @@ nav {
 .case-meta { display: flex; gap: 1.5rem; margin-bottom: 1.2rem; }
 .case-meta-item { font-size: 0.78rem; color: var(--muted); }
 .case-meta-item strong { display: block; color: var(--text); font-weight: 600; font-size: 0.82rem; }
-.case-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.case-body p { font-size: 0.98rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
 .case-result { background: var(--gold-pale); border-left: 3px solid var(--gold); padding: 0.9rem 1.2rem; font-size: 0.84rem; color: #5a3d08; line-height: 1.6; }
 .case-result strong { color: #3d2905; }
 
@@ -209,7 +209,7 @@ nav {
 /* ── CAREER TIMELINE ── */
 .timeline-container { display: grid; grid-template-columns: 1fr 3fr; gap: 4rem; }
 .timeline-nav { position: sticky; top: 100px; }
-.tl-nav-item { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-size: 0.82rem; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.tl-nav-item { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-size: 0.95rem; color: rgba(255,255,255,0.4); transition: color 0.2s; }
 .tl-nav-item:hover { color: var(--gold-light); }
 .tl-nav-item.active { color: var(--gold); font-weight: 600; }
 .timeline { display: flex; flex-direction: column; gap: 0; }
@@ -218,10 +218,10 @@ nav {
 .tl-dot { position: absolute; left: -5px; top: 4px; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; border: 2px solid var(--navy); }
 .tl-date { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
 .tl-role { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white); font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
-.tl-company { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
-.tl-desc { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 1rem; }
+.tl-company { font-size: 0.95rem; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
+.tl-desc { font-size: 0.98rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 1rem; }
 .tl-achievements { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.tl-achievements li { font-size: 0.84rem; color: rgba(255,255,255,0.55); display: flex; gap: 0.7rem; line-height: 1.6; }
+.tl-achievements li { font-size: 0.95rem; color: rgba(255,255,255,0.55); display: flex; gap: 0.7rem; line-height: 1.6; }
 .tl-achievements li::before { content: '◆'; color: var(--gold); font-size: 0.45rem; margin-top: 0.5rem; flex-shrink: 0; }
 
 /* ── BLOG ── */
@@ -649,7 +649,7 @@ footer span { color: rgba(201,168,76,0.4); }
 <section class="section section-dark" id="gcc">
   <div class="s-label">Regional depth</div>
   <div class="s-title">GCC & MEA <em>market expertise</em></div>
-  <p class="s-lead">Direct relationships with health authorities across 12+ markets — not just knowledge, but established working relationships built over 16 years.</p>
+  <p class="s-lead">Direct relationships with health authorities across 12+ markets — not just knowledge, but established working relationships built over 17+ years.</p>
 
   <div class="gcс-layout">
     <div class="market-list">
@@ -790,16 +790,16 @@ footer span { color: rgba(201,168,76,0.4); }
 <!-- ═══ CAREER TIMELINE ═══ -->
 <section class="section section-dark" id="career">
   <div class="s-label">Professional journey</div>
-  <div class="s-title">16 years of <em>regulatory excellence</em></div>
+  <div class="s-title">17+ years of <em>regulatory excellence</em></div>
 
   <div class="timeline-container">
     <div class="timeline-nav">
-      <div class="tl-nav-item active">Galderma · 2016–Present</div>
-      <div class="tl-nav-item">Actavis / Allergan · 2014–2016</div>
-      <div class="tl-nav-item">Julphar · 2009–2013</div>
+      <a href="#tl-galderma" class="tl-nav-item active" style="text-decoration:none;display:block;">Galderma · 2016–Present</a>
+      <a href="#tl-actavis" class="tl-nav-item" style="text-decoration:none;display:block;">Actavis / Allergan · 2014–2016</a>
+      <a href="#tl-julphar" class="tl-nav-item" style="text-decoration:none;display:block;">Julphar · 2009–2013</a>
     </div>
     <div class="timeline">
-      <div class="tl-item">
+      <div class="tl-item" id="tl-galderma">
         <div class="tl-dot"></div>
         <div class="tl-date">April 2016 — Present · 9 Years</div>
         <div class="tl-role">Regulatory Affairs Manager, MEA-GCC</div>
@@ -814,7 +814,7 @@ footer span { color: rgba(201,168,76,0.4); }
           <li>EDE-licensed Pharmacist-in-Charge — Scientific Office</li>
         </ul>
       </div>
-      <div class="tl-item">
+      <div class="tl-item" id="tl-actavis">
         <div class="tl-dot"></div>
         <div class="tl-date">January 2014 — February 2016 · 2 Years</div>
         <div class="tl-role">Regulatory Affairs Associate</div>
@@ -826,7 +826,7 @@ footer span { color: rgba(201,168,76,0.4); }
           <li>Achieved 89% performance target matrix</li>
         </ul>
       </div>
-      <div class="tl-item">
+      <div class="tl-item" id="tl-julphar">
         <div class="tl-dot"></div>
         <div class="tl-date">July 2009 — December 2013 · 4.5 Years</div>
         <div class="tl-role">Regulatory Affairs Officer</div>
@@ -921,7 +921,7 @@ const AT_HEADERS = {
 };
 
 async function fetchPosts() {
-  if (CONFIG.AIRTABLE_TOKEN === 'patnbd8JNJcLtVjxV.ff13c8c595b863277957944c4df06f3e6f1788ed11e5542937603be86d4b83d9') {
+  if (!CONFIG.AIRTABLE_TOKEN || !CONFIG.AIRTABLE_BASE_ID) {
     renderEmptyBlog(true);
     return;
   }
@@ -1080,7 +1080,7 @@ async function publishPost() {
 }
 
 async function loadAdminPosts() {
-  if (CONFIG.AIRTABLE_TOKEN === 'patnbd8JNJcLtVjxV.ff13c8c595b863277957944c4df06f3e6f1788ed11e5542937603be86d4b83d9') {
+  if (!CONFIG.AIRTABLE_TOKEN || !CONFIG.AIRTABLE_BASE_ID) {
     document.getElementById('adminPostsList').innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">Connect Airtable to manage posts.</p>';
     return;
   }
