@@ -933,7 +933,7 @@ const CONFIG = {
   // After Airtable setup, paste your values here:
   AIRTABLE_TOKEN: 'patnbd8JNJcLtVjxV.ff13c8c595b863277957944c4df06f3e6f1788ed11e5542937603be86d4b83d9',
   AIRTABLE_BASE_ID: 'approLkDOHXYmnmWR',
-  AIRTABLE_TABLE: 'Posts',
+  AIRTABLE_TABLE: 'Post',
   ADMIN_PASSWORD: 'SheemazRA2025!'  // Change this to your own password
 };
 
@@ -986,12 +986,12 @@ function renderBlog(records) {
     const f = r.fields;
     const tags = f.Tags ? f.Tags.split(',').map(t => t.trim()) : [];
     const tagHtml = tags.map(t => `<span class="blog-tag">${t}</span>`).join('');
-    grid.innerHTML += `
-      <div class="blog-card" onclick="openPost('${r.id}', ${JSON.stringify(f).replace(/'/g,"&#39;")})">
-        <div class="blog-img"><div class="blog-img-text">${f.Title || ''}</div></div>
+    window._blogPostData[r.id]=f; grid.innerHTML += `
+      <div class="blog-card" data-post-id="${r.id}"">
+        <div class="blog-img"><div class="blog-img-text">${f.Name || f.Title || ''}</div></div>
         <div class="blog-body">
           <div class="blog-tags">${tagHtml}</div>
-          <h3>${f.Title || ''}</h3>
+          <h3>${f.Name || f.Title || ''}</h3>
           <p>${f.Summary || (f.Body || '').slice(0, 120) + '...'}</p>
           <div class="blog-meta">
             <span>${f.Date || ''}</span>
@@ -1000,7 +1000,7 @@ function renderBlog(records) {
       </div>`;
   });
   container.innerHTML = '';
-  container.appendChild(grid);
+  container.appendChild(grid); window._blogPostData=window._blogPostData||{}; grid.addEventListener('click',e=>{const c=e.target.closest('.blog-card');if(c)openPost(c.dataset.postId,window._blogPostData[c.dataset.postId]);});
 }
 
 function renderEmptyBlog(isSetup) {
@@ -1017,9 +1017,10 @@ function renderEmptyBlog(isSetup) {
 function openPost(id, fields) {
   const tags = fields.Tags ? fields.Tags.split(',').map(t => t.trim()) : [];
   document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
-  document.getElementById('modalTitle').textContent = fields.Title || '';
+  document.getElementById('modalTitle').textContent = fields.Name || fields.Title || '';
   document.getElementById('modalDate').textContent = fields.Date || '';
-  document.getElementById('modalBody').textContent = fields.Body || '';
+  document.getElementById('modalBody').innerHTML = (fields.Body || '').replace(/
+/g, '<br>');
   document.getElementById('postModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1086,7 +1087,7 @@ async function publishPost() {
   msg.style.display = 'none';
 
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  const fields = { Title: title, Tags: tags, Summary: summary, Body: body, Date: today };
+  const fields = { Name: title, Tags: tags, Summary: summary, Body: body, Date: today };
 
   try {
     const result = await createPost(fields);
@@ -1117,7 +1118,7 @@ async function loadAdminPosts() {
     if (!data.records || !data.records.length) { list.innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">No posts yet.</p>'; return; }
     list.innerHTML = data.records.map(r => `
       <div class="admin-post-row">
-        <div class="admin-post-title">${r.fields.Title || '(Untitled)'}</div>
+        <div class="admin-post-title">${r.fields.Name || '(Untitled)'}</div>
         <div class="admin-post-date">${r.fields.Date || ''}</div>
         <button class="admin-delete" onclick="removePost('${r.id}')">Delete</button>
       </div>`).join('');
