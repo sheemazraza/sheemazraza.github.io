@@ -449,7 +449,7 @@ footer span { color: rgba(201,168,76,0.4); }
       <label>Full Post Content *</label>
       <textarea id="postBody" placeholder="Write your blog post here. Paragraphs are preserved automatically."></textarea>
     </div>
-    <button class="admin-submit" onclick="publishPost()">Publish Post →</button>
+    <button onclick="testConnection()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;font-size:0.82rem;cursor:pointer;border-radius:2px;font-family:'Outfit',sans-serif;margin-right:1rem;">Test Connection</button><button class="admin-submit" onclick="publishPost()">Publish Post →</button>
 
     <div class="admin-posts-section">
       <h3>Published Posts</h3>
@@ -933,45 +933,71 @@ const CONFIG = {
   // After Airtable setup, paste your values here:
   AIRTABLE_TOKEN: 'patnbd8JNJcLtVjxV.ff13c8c595b863277957944c4df06f3e6f1788ed11e5542937603be86d4b83d9',
   AIRTABLE_BASE_ID: 'approLkDOHXYmnmWR',
-  AIRTABLE_TABLE: 'Post',
+  AIRTABLE_TABLE: 'Posts',
   ADMIN_PASSWORD: 'SheemazRA2025!'  // Change this to your own password
 };
 
 /* ══════════════════════════════════════
    AIRTABLE API
    ══════════════════════════════════════ */
-const AT_URL = `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/${CONFIG.AIRTABLE_TABLE}`;
+window._blogPostData = {};
+
+function atUrl(id) {
+  const base = `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/${encodeURIComponent(CONFIG.AIRTABLE_TABLE)}`;
+  return id ? `${base}/${id}` : base;
+}
+
 const AT_HEADERS = {
   'Authorization': `Bearer ${CONFIG.AIRTABLE_TOKEN}`,
   'Content-Type': 'application/json'
 };
 
 async function fetchPosts() {
-  if (!CONFIG.AIRTABLE_TOKEN || !CONFIG.AIRTABLE_BASE_ID) {
-    renderEmptyBlog(true);
-    return;
-  }
+  if (!CONFIG.AIRTABLE_TOKEN || !CONFIG.AIRTABLE_BASE_ID) { renderEmptyBlog(true); return; }
   try {
-    const res = await fetch(`${AT_URL}?sort[0][field]=Date&sort[0][direction]=desc`, { headers: AT_HEADERS });
+    const res = await fetch(`${atUrl()}?sort[0][field]=Date&sort[0][direction]=desc`, { headers: AT_HEADERS });
     const data = await res.json();
-    if (data.records) renderBlog(data.records);
-    else renderEmptyBlog(false);
-  } catch(e) {
-    renderEmptyBlog(false);
-  }
+    if (data.error) { renderEmptyBlog(false, `Airtable error: ${data.error.type} — ${data.error.message}`); return; }
+    if (data.records && data.records.length) { renderBlog(data.records); } else { renderEmptyBlog(false); }
+  } catch(e) { renderEmptyBlog(false, 'Could not reach Airtable. Check your internet connection.'); }
 }
 
 async function createPost(fields) {
-  const res = await fetch(AT_URL, {
-    method: 'POST',
-    headers: AT_HEADERS,
-    body: JSON.stringify({ fields })
-  });
-  return await res.json();
+  const res = await fetch(atUrl(), { method: 'POST', headers: AT_HEADERS, body: JSON.stringify({ fields }) });
+  const data = await res.json();
+  if (data.error) throw new Error(`${data.error.type}: ${data.error.message}`);
+  return data;
 }
 
 async function deletePost(id) {
-  await fetch(`${AT_URL}/${id}`, { method: 'DELETE', headers: AT_HEADERS });
+  const res = await fetch(atUrl(id), { method: 'DELETE', headers: AT_HEADERS });
+  const data = await res.json();
+  if (data.error) throw new Error(`${data.error.type}: ${data.error.message}`);
+  return data;
+}
+
+async function testConnection() {
+  const msg = document.getElementById('adminMsg');
+  msg.style.cssText = 'display:block;background:#e8f0fe;color:#1a3a7a;border:1px solid #90b4fa;padding:0.9rem 1.2rem;border-radius:2px;font-size:0.85rem;margin-bottom:1.5rem;';
+  msg.textContent = 'Testing connection to Airtable...';
+  try {
+    const res = await fetch(`${atUrl()}?maxRecords=1`, { headers: AT_HEADERS });
+    const data = await res.json();
+    msg.style.cssText = '';
+    if (data.error) {
+      msg.className = 'admin-msg error';
+      msg.textContent = `❌ Connection failed: ${data.error.type} — ${data.error.message}. Table name tried: "${CONFIG.AIRTABLE_TABLE}"`;
+    } else {
+      msg.className = 'admin-msg success';
+      msg.textContent = `✅ Connected! Table "${CONFIG.AIRTABLE_TABLE}" found with ${data.records ? data.records.length : 0} record(s).`;
+    }
+    msg.style.display = 'block';
+  } catch(e) {
+    msg.style.cssText = '';
+    msg.className = 'admin-msg error';
+    msg.textContent = `❌ Network error: ${e.message}`;
+    msg.style.display = 'block';
+  }
 }
 
 /* ══════════════════════════════════════
@@ -979,35 +1005,42 @@ async function deletePost(id) {
    ══════════════════════════════════════ */
 function renderBlog(records) {
   const container = document.getElementById('blogContainer');
-  if (!records.length) { renderEmptyBlog(false); return; }
+  if (!records || !records.length) { renderEmptyBlog(false); return; }
   const grid = document.createElement('div');
   grid.className = 'blog-grid';
   records.forEach(r => {
     const f = r.fields;
+    window._blogPostData[r.id] = f;
     const tags = f.Tags ? f.Tags.split(',').map(t => t.trim()) : [];
     const tagHtml = tags.map(t => `<span class="blog-tag">${t}</span>`).join('');
-    window._blogPostData[r.id]=f; grid.innerHTML += `
-      <div class="blog-card" data-post-id="${r.id}"">
-        <div class="blog-img"><div class="blog-img-text">${f.Name || f.Title || ''}</div></div>
+    const title = f.Name || f.Title || '(Untitled)';
+    const summary = f.Summary || (f.Body || '').slice(0, 120) + '...';
+    grid.innerHTML += `
+      <div class="blog-card" data-post-id="${r.id}">
+        <div class="blog-img"><div class="blog-img-text">${title}</div></div>
         <div class="blog-body">
           <div class="blog-tags">${tagHtml}</div>
-          <h3>${f.Name || f.Title || ''}</h3>
-          <p>${f.Summary || (f.Body || '').slice(0, 120) + '...'}</p>
-          <div class="blog-meta">
-            <span>${f.Date || ''}</span>
-          </div>
+          <h3>${title}</h3>
+          <p>${summary}</p>
+          <div class="blog-meta"><span>${f.Date || ''}</span></div>
         </div>
       </div>`;
   });
   container.innerHTML = '';
-  container.appendChild(grid); window._blogPostData=window._blogPostData||{}; grid.addEventListener('click',e=>{const c=e.target.closest('.blog-card');if(c)openPost(c.dataset.postId,window._blogPostData[c.dataset.postId]);});
+  container.appendChild(grid);
+  grid.addEventListener('click', e => {
+    const card = e.target.closest('.blog-card');
+    if (card) openPost(card.dataset.postId, window._blogPostData[card.dataset.postId]);
+  });
 }
 
-function renderEmptyBlog(isSetup) {
+function renderEmptyBlog(isSetup, errorMsg) {
+  const errHtml = errorMsg ? `<p style="color:#c0392b;font-size:0.82rem;margin-top:0.5rem;">${errorMsg}</p>` : '';
   document.getElementById('blogContainer').innerHTML = `
     <div class="blog-empty">
-      <strong>${isSetup ? 'Blog not yet connected' : 'No posts yet'}</strong>
-      <p>${isSetup ? 'Complete the Airtable setup in the HTML file, then posts will appear here.' : 'Click "+ Write Post" above to publish your first insight.'}</p>
+      <strong>${isSetup ? 'Blog not yet connected' : errorMsg ? 'Could not load posts' : 'No posts yet'}</strong>
+      <p>${isSetup ? 'Complete Airtable setup, then posts will appear here.' : errorMsg ? '' : 'Click "+ Write Post" above to publish your first insight.'}</p>
+      ${errHtml}
     </div>`;
 }
 
@@ -1015,12 +1048,13 @@ function renderEmptyBlog(isSetup) {
    POST MODAL
    ══════════════════════════════════════ */
 function openPost(id, fields) {
+  if (!fields) return;
   const tags = fields.Tags ? fields.Tags.split(',').map(t => t.trim()) : [];
   document.getElementById('modalTags').innerHTML = tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
   document.getElementById('modalTitle').textContent = fields.Name || fields.Title || '';
   document.getElementById('modalDate').textContent = fields.Date || '';
-  document.getElementById('modalBody').innerHTML = (fields.Body || '').replace(/
-/g, '<br>');
+  const bodyText = (fields.Body || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  document.getElementById('modalBody').innerHTML = bodyText;
   document.getElementById('postModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1045,18 +1079,14 @@ function checkPassword() {
   if (val === CONFIG.ADMIN_PASSWORD) {
     document.getElementById('pwdScreen').classList.remove('open');
     document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdError').style.display = 'none';
     openAdmin();
   } else {
     document.getElementById('pwdError').style.display = 'block';
     document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('pwdInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') checkPassword();
-  });
-});
 
 /* ══════════════════════════════════════
    ADMIN PANEL
@@ -1079,56 +1109,47 @@ async function publishPost() {
   const summary = document.getElementById('postSummary').value.trim();
   const body = document.getElementById('postBody').value.trim();
   const msg = document.getElementById('adminMsg');
-
-  if (!title || !body) {
-    msg.className = 'admin-msg error'; msg.textContent = 'Title and body are required.'; msg.style.display = 'block';
-    return;
-  }
   msg.style.display = 'none';
-
+  if (!title || !body) { msg.className = 'admin-msg error'; msg.textContent = '⚠️ Title and post content are required.'; msg.style.display = 'block'; return; }
+  const submitBtn = document.querySelector('.admin-submit');
+  submitBtn.textContent = 'Publishing...'; submitBtn.disabled = true;
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  const fields = { Name: title, Tags: tags, Summary: summary, Body: body, Date: today };
-
   try {
-    const result = await createPost(fields);
-    if (result.id) {
-      msg.className = 'admin-msg success'; msg.textContent = '✔ Post published successfully!'; msg.style.display = 'block';
-      document.getElementById('postTitle').value = '';
-      document.getElementById('postTags').value = '';
-      document.getElementById('postSummary').value = '';
-      document.getElementById('postBody').value = '';
-      loadAdminPosts();
-    } else {
-      throw new Error('No record ID returned');
-    }
+    await createPost({ Name: title, Tags: tags, Summary: summary, Body: body, Date: today });
+    msg.className = 'admin-msg success'; msg.textContent = '✅ Post published successfully!'; msg.style.display = 'block';
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postTags').value = '';
+    document.getElementById('postSummary').value = '';
+    document.getElementById('postBody').value = '';
+    loadAdminPosts();
   } catch(e) {
-    msg.className = 'admin-msg error'; msg.textContent = 'Failed to publish. Check your Airtable token and Base ID in the HTML config.'; msg.style.display = 'block';
+    msg.className = 'admin-msg error'; msg.textContent = `❌ Failed to publish: ${e.message}`; msg.style.display = 'block';
+  } finally {
+    submitBtn.textContent = 'Publish Post →'; submitBtn.disabled = false;
   }
 }
 
 async function loadAdminPosts() {
-  if (!CONFIG.AIRTABLE_TOKEN || !CONFIG.AIRTABLE_BASE_ID) {
-    document.getElementById('adminPostsList').innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">Connect Airtable to manage posts.</p>';
-    return;
-  }
+  const list = document.getElementById('adminPostsList');
+  list.innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">Loading...</p>';
   try {
-    const res = await fetch(`${AT_URL}?sort[0][field]=Date&sort[0][direction]=desc`, { headers: AT_HEADERS });
+    const res = await fetch(`${atUrl()}?sort[0][field]=Date&sort[0][direction]=desc`, { headers: AT_HEADERS });
     const data = await res.json();
-    const list = document.getElementById('adminPostsList');
+    if (data.error) { list.innerHTML = `<p style="color:#c0392b;font-size:0.84rem;">❌ ${data.error.type}: ${data.error.message}<br>Table tried: "${CONFIG.AIRTABLE_TABLE}"</p>`; return; }
     if (!data.records || !data.records.length) { list.innerHTML = '<p style="color:var(--muted);font-size:0.84rem;">No posts yet.</p>'; return; }
     list.innerHTML = data.records.map(r => `
       <div class="admin-post-row">
-        <div class="admin-post-title">${r.fields.Name || '(Untitled)'}</div>
+        <div class="admin-post-title">${r.fields.Name || r.fields.Title || '(Untitled)'}</div>
         <div class="admin-post-date">${r.fields.Date || ''}</div>
         <button class="admin-delete" onclick="removePost('${r.id}')">Delete</button>
       </div>`).join('');
-  } catch(e) {}
+  } catch(e) { list.innerHTML = `<p style="color:#c0392b;font-size:0.84rem;">Network error: ${e.message}</p>`; }
 }
 
 async function removePost(id) {
   if (!confirm('Delete this post? This cannot be undone.')) return;
-  await deletePost(id);
-  loadAdminPosts();
+  try { await deletePost(id); loadAdminPosts(); fetchPosts(); }
+  catch(e) { alert(`Could not delete: ${e.message}`); }
 }
 
 /* ══════════════════════════════════════
@@ -1139,6 +1160,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Hash-based admin access: go to yoursite.com/#admin
   if (window.location.hash === '#admin') openAdminGate();
+
+  document.getElementById('pwdInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
 
   // ── CAREER TIMELINE NAV: highlight active item on scroll ──
   const tlItems = document.querySelectorAll('.tl-item[id]');
