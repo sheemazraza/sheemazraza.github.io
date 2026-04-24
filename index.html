@@ -1022,7 +1022,7 @@ function renderBlog(records) {
           <div class="blog-tags">${tagHtml}</div>
           <h3>${title}</h3>
           <p>${summary}</p>
-          <div class="blog-meta"><span>${f.Date || ''}</span></div>
+          <div class="blog-meta"><span>${(d=>{if(!d)return '';if(/^\d{4}-\d{2}-\d{2}$/.test(d)){const[y,m,day]=d.split('-').map(Number);const ms=['January','February','March','April','May','June','July','August','September','October','November','December'];return `${day} ${ms[m-1]} ${y}`;}return d;})(f.Date)}</span></div>
         </div>
       </div>`;
   });
