@@ -260,21 +260,24 @@ nav {
 
 /* ── BLOG ── */
 .blog-header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
-.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
-.blog-card { background: #0f2644; border: 1px solid rgba(201,168,76,0.12); border-radius: 10px; padding: 1.6rem; display: flex; flex-direction: column; gap: 0.9rem; cursor: pointer; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; }
-.blog-card:hover { background: #132f52; transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
-.blog-img { display: none; }
-.blog-badge { display: inline-flex; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; padding: 4px 9px; border-radius: 4px; width: fit-content; text-transform: uppercase; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.blog-tags { display: none; }
-.blog-card h3 { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; color: #f0ece4; line-height: 1.35; flex: 1; }
-.blog-card p { font-family: 'Outfit', sans-serif; font-size: 0.87rem; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.7; }
-.blog-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.1); margin-top: auto; }
-.blog-meta { font-size: 0.72rem; color: rgba(201,168,76,0.45); font-family: 'Outfit', sans-serif; }
-.blog-arrow { width: 28px; height: 28px; border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.8rem; }
+.blog-card { background: var(--white); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+.blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(11,31,58,0.08); }
+.blog-img { height: 180px; background: linear-gradient(135deg, var(--navy-2), var(--navy-3)); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.blog-img-text { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--gold-light); text-align: center; font-style: normal; line-height: 1.5; }
+.blog-body { padding: 1.5rem; }
+.blog-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.blog-tag { background: var(--gold-pale); color: #6b4c0a; font-size: 0.7rem; padding: 5px 12px; border-radius: 20px; font-weight: 600; letter-spacing: 0.03em; display: inline-block; }
+.blog-badge { display: none; }
+.blog-footer { display: none; }
+.blog-arrow { display: none; }
+.blog-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem; }
+.blog-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.9; margin-bottom: 1.2rem; }
+.blog-meta { font-size: 0.75rem; color: var(--muted); display: flex; gap: 1rem; }
 .blog-loading { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
-.blog-empty { text-align: center; padding: 4rem 2rem; border: 2px dashed rgba(201,168,76,0.2); border-radius: 10px; }
+.blog-empty { text-align: center; padding: 4rem 2rem; border: 2px dashed var(--border); border-radius: 2px; }
 .blog-empty p { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
-.blog-empty strong { color: var(--gold-light); font-size: 1rem; display: block; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; }
+.blog-empty strong { color: var(--navy); font-size: 1rem; display: block; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; }
 
 /* ── POST MODAL ── */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11,31,58,0.85); z-index: 500; overflow-y: auto; padding: 80px 20px 40px; }
@@ -939,34 +942,49 @@ footer span { color: rgba(201,168,76,0.4); }
 
     <div id="blogContainer"><div class="blog-grid">
       <div class="blog-card" data-post-id="reconklyLLAo9Z2un">
-        <div class="blog-badge">Regulatory Leadership</div>
-        <h3>The One Question That Separates Good RA Leaders from Great Ones</h3>
-        <p>Regulatory Strategy and how it makes a big difference in outcomes across GCC markets.</p>
-        <div class="blog-footer"><div class="blog-meta">Thought Leadership · 22 April 2026</div><div class="blog-arrow">→</div></div>
+        <div class="blog-img"><div class="blog-img-text">The One Question That Separates Good RA Leaders from Great Ones</div></div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="blog-tag">#RegulatoryAffairs</span><span class="blog-tag">#Leadership</span><span class="blog-tag">#CareerDevelopment</span><span class="blog-tag">#PharmaLeaders</span><span class="blog-tag">#Dubai</span><span class="blog-tag">#StrategicThinking</span><span class="blog-tag">#GCC</span></div>
+          <h3>The One Question That Separates Good RA Leaders from Great Ones</h3>
+          <p>Regulatory Strategy and how it makes a big difference</p>
+          <div class="blog-meta"><span>22 April 2026</span></div>
+        </div>
       </div>
       <div class="blog-card" data-post-id="recmjHlmKgXRJayD5">
-        <div class="blog-badge">Process Excellence</div>
-        <h3>The Importance of Simplifying Regulatory Processes in the Middle East</h3>
-        <p>How simplified regulatory processes drive faster, more effective outcomes across Middle East markets.</p>
-        <div class="blog-footer"><div class="blog-meta">Strategic Post · 26 January 2026</div><div class="blog-arrow">→</div></div>
+        <div class="blog-img"><div class="blog-img-text">The Importance of Simplifying Regulatory Processes in the Middle East</div></div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="blog-tag">#Process Simplification</span><span class="blog-tag">#Middle East</span><span class="blog-tag">#Regulatory Affairs</span><span class="blog-tag">#GCC</span></div>
+          <h3>The Importance of Simplifying Regulatory Processes in the Middle East</h3>
+          <p>How simplified regulatory processes drive faster, more effective outcomes across Middle East markets</p>
+          <div class="blog-meta"><span>26 January 2026</span></div>
+        </div>
       </div>
       <div class="blog-card" data-post-id="recR46EEpr1Qa5VpU">
-        <div class="blog-badge">Career Insight</div>
-        <h3>Looking Back: What I Believed Early in My RA Journey — And What Still Holds True</h3>
-        <p>Reflections from my earlier career as a Regulatory Affairs Professional — the values and convictions that still guide my work today.</p>
-        <div class="blog-footer"><div class="blog-meta">Personal Insight · 10 May 2025</div><div class="blog-arrow">→</div></div>
+        <div class="blog-img"><div class="blog-img-text">Looking Back: What I Believed Early in My RA Journey — And What Still Holds True</div></div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="blog-tag">#Regulatory Affairs</span><span class="blog-tag">#Career Reflection</span><span class="blog-tag">#Patient Safety</span><span class="blog-tag">#UAE</span><span class="blog-tag">#Growth Mindset</span></div>
+          <h3>Looking Back: What I Believed Early in My RA Journey — And What Still Holds True</h3>
+          <p>Reflections from my earlier career as a Regulatory Affairs Professional — the values and convictions that still guide my work today</p>
+          <div class="blog-meta"><span>10 May 2025</span></div>
+        </div>
       </div>
       <div class="blog-card" data-post-id="recJpbyzwnJEv0pdS">
-        <div class="blog-badge">Regional Focus</div>
-        <h3>Navigating the Regulatory Affairs Environment in the Middle East: Opportunities and Challenges</h3>
-        <p>Key trends, challenges, and opportunities in the Middle East's regulatory landscape across Saudi Arabia, UAE, Egypt, and the GCC.</p>
-        <div class="blog-footer"><div class="blog-meta">Market Analysis · 12 October 2024</div><div class="blog-arrow">→</div></div>
+        <div class="blog-img"><div class="blog-img-text">Navigating the Regulatory Affairs Environment in the Middle East: Opportunities and Challenges</div></div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="blog-tag">#Middle East</span><span class="blog-tag">#Regulatory Affairs</span><span class="blog-tag">#GCC</span><span class="blog-tag">#UAE</span><span class="blog-tag">#Saudi Arabia</span><span class="blog-tag">#Market Access</span><span class="blog-tag">#Life Sciences</span><span class="blog-tag">#Pharma</span></div>
+          <h3>Navigating the Regulatory Affairs Environment in the Middle East: Opportunities and Challenges</h3>
+          <p>Key trends, challenges, and opportunities in the Middle East's regulatory landscape across Saudi Arabia, UAE, Egypt, and the GCC</p>
+          <div class="blog-meta"><span>12 October 2024</span></div>
+        </div>
       </div>
       <div class="blog-card" data-post-id="recgSaiDA6yKsfw8v">
-        <div class="blog-badge">Drug Safety</div>
-        <h3>New FDA MedWatch Alert: Iodine-containing Contrast Agents and Thyroid Risk in Infants</h3>
-        <p>FDA Drug Safety Communication on rare cases of underactive thyroid in infants following iodine-containing contrast agents used in medical imaging.</p>
-        <div class="blog-footer"><div class="blog-meta">Regulatory Alert · 18 November 2015</div><div class="blog-arrow">→</div></div>
+        <div class="blog-img"><div class="blog-img-text">New FDA MedWatch Alert: Iodine-containing Contrast Agents and Thyroid Risk in Infants</div></div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="blog-tag">#FDA</span><span class="blog-tag">#Drug Safety</span><span class="blog-tag">#Medical Imaging</span><span class="blog-tag">#Regulatory Alert</span><span class="blog-tag">#Pharmacovigilance</span></div>
+          <h3>New FDA MedWatch Alert: Iodine-containing Contrast Agents and Thyroid Risk in Infants</h3>
+          <p>FDA Drug Safety Communication on rare cases of underactive thyroid in infants following iodine-containing contrast agents used in medical imaging</p>
+          <div class="blog-meta"><span>18 November 2015</span></div>
+        </div>
       </div>
     </div></div>
 
@@ -981,10 +999,10 @@ footer span { color: rgba(201,168,76,0.4); }
       <p style="color:var(--muted); font-size:0.94rem; line-height:1.85; margin-top:1rem;">I'm always open to meaningful conversations with peers, collaborators, and industry leaders across the GCC and MEA regulatory space. Feel free to reach out.</p>
     </div>
     <div class="contact-links-col">
-      <a href="/cdn-cgi/l/email-protection#50233835353d312a2210373d31393c7e333f3d" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#cfbca7aaaaa2aeb5bd8fa8a2aea6a3e1aca0a2" class="contact-link">
         <div>
           <div class="cl-label">Email</div>
-          <div class="cl-val"><span class="__cf_email__" data-cfemail="d4a7bcb1b1b9b5aea694b3b9b5bdb8fab7bbb9">[email&#160;protected]</span></div>
+          <div class="cl-val"><span class="__cf_email__" data-cfemail="26554e43434b475c5466414b474f4a0845494b">[email&#160;protected]</span></div>
         </div>
       </a>
       <a href="https://www.linkedin.com/in/sheemaz-raza/" target="_blank" class="contact-link">
@@ -1088,12 +1106,9 @@ async function testConnection() {
    ══════════════════════════════════════ */
 function renderBlog(records) {
   const container = document.getElementById('blogContainer');
-  if (!records || !records.length) { return; }
-  // Get existing grid or create one
-  let grid = container.querySelector('.blog-grid');
-  if (!grid) { grid = document.createElement('div'); grid.className = 'blog-grid'; container.appendChild(grid); }
-  // Collect existing static post IDs so we don't duplicate
-  const existingIds = new Set([...grid.querySelectorAll('.blog-card')].map(c => c.dataset.postId));
+  if (!records || !records.length) { renderEmptyBlog(false); return; }
+  const grid = document.createElement('div');
+  grid.className = 'blog-grid';
   records.forEach(r => {
     const f = r.fields;
     window._blogPostData[r.id] = f;
@@ -1109,31 +1124,26 @@ function renderBlog(records) {
         tags = raw.split(',').map(t => t.trim()).filter(t => t.length > 0);
       }
     }
-    if (existingIds.has(r.id)) { window._blogPostData[r.id] = f; return; } // skip static cards
-    const badge = tags.length > 0 ? tags[0].replace(/^#/, '') : 'Insight';
+    const tagHtml = tags.map(t => `<span class="blog-tag">#${t}</span>`).join('');
     const title = f.Name || f.Title || '(Untitled)';
     const summary = f.Summary || (f.Body || '').slice(0, 120) + '...';
-    const date = f.Date || '';
     grid.innerHTML += `
       <div class="blog-card" data-post-id="${r.id}">
-        <div class="blog-badge">${badge}</div>
-        <h3>${title}</h3>
-        <p>${summary}</p>
-        <div class="blog-footer">
-          <div class="blog-meta">${date}</div>
-          <div class="blog-arrow">→</div>
+        <div class="blog-img"><div class="blog-img-text">${title}</div></div>
+        <div class="blog-body">
+          <div class="blog-tags">${tagHtml}</div>
+          <h3>${title}</h3>
+          <p>${summary}</p>
+          <div class="blog-meta"><span>${f.Date || ''}</span></div>
         </div>
       </div>`;
   });
-  if (!container.contains(grid)) container.appendChild(grid);
-  // Register static card click handler
-  const staticGrid = document.getElementById('blogContainer').querySelector('.blog-grid');
-  if (staticGrid) {
-    staticGrid.addEventListener('click', e => {
-      const card = e.target.closest('.blog-card');
-      if (card) openPost(card.dataset.postId, window._blogPostData[card.dataset.postId]);
-    });
-  }
+  container.innerHTML = '';
+  container.appendChild(grid);
+  grid.addEventListener('click', e => {
+    const card = e.target.closest('.blog-card');
+    if (card) openPost(card.dataset.postId, window._blogPostData[card.dataset.postId]);
+  });
 }
 
 function renderEmptyBlog(isSetup, errorMsg) {
